@@ -1,0 +1,15 @@
+.course-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.course-toolbar .tabs.small{margin-bottom:0;}
+.csort{position:relative;}
+.csort-btn{display:inline-flex;align-items:center;gap:8px;height:38px;min-width:38px;padding:0 10px;justify-content:center;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;}
+.csort-btn:hover{border-color:var(--primary);color:var(--primary);}
+.csort-btn.active{border-color:var(--primary);color:var(--primary);padding:0 14px 0 10px;}
+.csort-btn:not(.active) .csort-label{display:none;}
+.csort-menu{position:absolute;right:0;top:calc(100% + 8px);z-index:30;min-width:210px;padding:6px;border-radius:14px;background:var(--card);border:1px solid var(--border);box-shadow:0 14px 36px rgba(0,0,0,.28);}
+.csort-menu[hidden]{display:none;}
+.csort-title{padding:8px 10px 6px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);font-weight:700;}
+.csort-opt{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border:0;border-radius:9px;background:transparent;color:var(--text);font:inherit;font-size:13px;text-align:left;cursor:pointer;}
+.csort-opt:hover{background:var(--soft);}
+.csort-tick{width:14px;color:var(--primary);visibility:hidden;font-weight:700;}
+.csort-opt.on{font-weight:700;color:var(--primary);}
+.csort-opt.on .csort-tick{visibility:visible;}

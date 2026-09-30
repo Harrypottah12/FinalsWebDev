@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>LMS - Learning Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/topbar-tasks-calendar.css">
+<link rel="stylesheet" href="css/module-reader.css">
+<link rel="stylesheet" href="css/module-intro-assessments.css">
+<link rel="stylesheet" href="css/course-sort.css">
+<link rel="stylesheet" href="css/profile-perks.css">
+<link rel="stylesheet" href="css/others-menu.css">
+<link rel="stylesheet" href="css/news-engagement.css">
+<link rel="stylesheet" href="css/mobile-nav.css">
+</head>
+<body>
+
+<div id="view-main" class="view">
+  <div class="app-shell">
+
+    <aside class="sidebar">
+
+      <a class="nav-item" href="#" data-page="dashboard" data-nav="dashboard">
+        <span class="nav-ico" data-icon="home"></span>
+        <span class="label-text">Home</span>
+      </a>
+      <a class="nav-item" href="#" data-page="inbox" data-nav="inbox">
+        <span class="nav-ico" data-icon="inbox"></span>
+        <span class="label-text">Inbox</span>
+        <span class="nav-badge" id="inbox-badge">3</span>
+      </a>
+      <a class="nav-item" href="#" data-page="lesson" data-nav="lesson">
+        <span class="nav-ico" data-icon="book"></span>
+        <span class="label-text">Lessons</span>
+      </a>
+      <a class="nav-item" href="#" data-page="task" data-nav="task">
+        <span class="nav-ico" data-icon="tasks"></span>
+        <span class="label-text">Tasks</span>
+      </a>
+      <a class="nav-item" href="#" data-page="group" data-nav="group">
+        <span class="nav-ico" data-icon="users"></span>
+        <span class="label-text">Friends</span>
+      </a>
+      <a class="nav-item" href="#" id="nav-others" data-nav="others" aria-haspopup="true" aria-expanded="false">
+        <span class="nav-ico" data-icon="grid"></span>
+        <span class="label-text">Others</span>
+        <span class="nav-caret" data-icon="chevronRight"></span>
+      </a>
+
+      <div class="sidebar-mini" id="sidebar-mini">
+        <div class="sidebar-mini-block">
+          <div class="sidebar-mini-head">
+            <span class="ico-sm" data-icon="tasks"></span><h4>To-Do</h4>
+            <button type="button" class="mini-link" data-mini-go="task">View all</button>
+            <button type="button" class="chevron-btn sm" id="mini-todo-toggle" aria-label="Hide to-do" aria-expanded="true"><span data-icon="chevronDown"></span></button>
+          </div>
+          <ul class="task-list sidebar-task-list mini" id="sidebar-mini-todo"></ul>
+        </div>
+        <div class="sidebar-mini-block">
+          <div class="sidebar-mini-head">
+            <span class="ico-sm" data-icon="megaphone"></span><h4>News</h4>
+            <button type="button" class="mini-link" data-mini-go="news">View all</button>
+            <button type="button" class="chevron-btn sm" id="mini-news-toggle" aria-label="Hide news" aria-expanded="true"><span data-icon="chevronDown"></span></button>
+          </div>
+          <div class="feed-list mini" id="sidebar-mini-news"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer" hidden>
+        <a class="nav-item" href="#" data-page="profile" data-nav="profile">
+          <span class="nav-ico" data-icon="user"></span>
+          <span class="label-text">Profile</span>
+        </a>
+        <button class="nav-item nav-item-btn" id="sidebar-theme-toggle">
+          <span class="nav-ico" data-icon="moon" id="sidebar-theme-ico"></span>
+          <span class="label-text" id="sidebar-theme-label">Dark mode</span>
+        </button>
+        <div class="status-ping" hidden>
+          <div class="avatar" id="footer-avatar">JR</div>
+          <span class="status-name label-text" id="footer-name">Jason Ranti</span>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content-area">
+      <header class="topbar">
+        <div class="search">
+          <span class="ico" data-icon="search"></span>
+          <input type="text" id="search-input" placeholder="Search course name or code (e.g. S-ITCS318)..." aria-label="Search courses">
+        </div>
+
+        <div class="icon-btn" id="msg-btn" role="button" tabindex="0" aria-label="Messages">
+          <span class="dot"></span>
+          <span class="ico" data-icon="mail"></span>
+          <div class="popover" id="msg-popover" hidden></div>
+        </div>
+        <div class="icon-btn" id="bell-btn" role="button" tabindex="0" aria-label="Notifications">
+          <span class="dot"></span>
+          <span class="ico" data-icon="bell"></span>
+          <div class="popover" id="bell-popover" hidden></div>
+        </div>
+        <div class="profile-wrap">
+          <button class="profile" id="profile-btn" aria-haspopup="true" aria-expanded="false">
+            <div class="avatar" id="header-avatar">JR</div>
+            <span class="profile-name" id="header-name">Jason Ranti</span>
+          </button>
+          <div class="profile-menu" id="profile-menu" hidden>
+            <button class="switch-btn" id="toggle-public-profile">
+              <span data-icon="shield"></span>
+              Public Profile: <b id="public-profile-state">Off</b>
+            </button>
+            <button class="switch-btn" id="theme-toggle">
+              <span class="ico" data-icon="sun" id="icon-sun"></span>
+              <span class="ico" data-icon="moon" id="icon-moon" hidden></span>
+              <span id="theme-toggle-label">Dark Mode</span>
+            </button>
+            <button class="switch-btn" id="open-edit-profile">
+              <span data-icon="user"></span>
+              Profile
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <section id="page-dashboard" class="page">
+
+        <div class="home-tabs-row">
+          <div class="tabs" role="tablist" aria-label="Home sections">
+            <button class="tab active" role="tab" aria-selected="true" data-home-tab="dashboard">Dashboard</button>
+            <button class="tab" role="tab" aria-selected="false" data-home-tab="news">
+              News <span class="tab-count" id="news-count" hidden></span>
+            </button>
+          </div>
+          <div class="tools-wrap" id="news-tools" hidden>
+            <button class="round-btn" id="news-filter-btn" aria-label="Filter news" aria-haspopup="true">
+              <span data-icon="sliders"></span>
+            </button>
+            <div class="popover" id="news-filter-popover" hidden></div>
+          </div>
+        </div>
+
+        <div id="home-dashboard">
+          <div class="hero" id="hero-carousel" aria-roledescription="carousel" aria-label="Today at a glance">
+            <div class="hero-slides" id="hero-slides"></div>
+            <div class="hero-dots" id="hero-dots"></div>
+            <div class="hero-nav">
+              <button id="hero-prev" data-icon="chevronLeft" aria-label="Previous slide"></button>
+              <button id="hero-next" data-icon="chevronRight" aria-label="Next slide"></button>
+            </div>
+          </div>
+
+          <div class="section-head">
+            <h2>Courses</h2>
+            <div class="nav-arrows">
+              <button id="dash-prev" aria-label="Previous courses"><span data-icon="chevronLeft"></span></button>
+              <button id="dash-next" aria-label="Next courses"><span data-icon="chevronRight"></span></button>
+            </div>
+          </div>
+          <div class="tabs small" id="course-tabs" role="tablist" aria-label="Course status">
+            <button class="tab active" role="tab" data-course-tab="enrolled">Enrolled <span class="tab-num" id="count-enrolled">0</span></button>
+            <button class="tab" role="tab" data-course-tab="completed">Completed <span class="tab-num" id="count-completed">0</span></button>
+          </div>
+          <div class="cards-row scroll" id="dash-courses"></div>
+        </div>
+
+        <div id="home-news" hidden>
+          <div class="news-actions">
+            <button class="primary-btn pill" id="post-announcement-btn">
+              <span data-icon="plus"></span> Post
+            </button>
+            <span class="filter-chip" id="news-filter-chip" hidden></span>
+          </div>
+          <div class="feed-list" id="announcement-feed"></div>
+        </div>
+      </section>
+
+      <section id="page-inbox" class="page" hidden>
+        <div class="panel">
+          <h2>Inbox</h2>
+          <div id="inbox-list"></div>
+        </div>
+      </section>
+
+      <section id="page-lesson" class="page" hidden>
+
+        <div class="section-head">
+          <h2>Academic Command Center</h2>
+          <button class="ghost-btn" id="lesson-professors-btn">
+            <span data-icon="users"></span> Professors
+          </button>
+        </div>
+
+        <div class="chips" id="lesson-chips"></div>
+
+        <div class="section-head">
+          <h3>Continue Watching</h3>
+          <div class="nav-arrows">
+            <button id="cw-prev" aria-label="Previous"><span data-icon="chevronLeft"></span></button>
+            <button id="cw-next" aria-label="Next"><span data-icon="chevronRight"></span></button>
+          </div>
+        </div>
+        <div class="cards-row scroll continue-watching-track" id="continue-watching-track"></div>
+
+        <div class="lesson-panel">
+          <div class="section-head">
+            <h2>Your Lessons</h2>
+          </div>
+          <table>
+            <thead><tr><th>Professor</th><th>Subject</th><th>Description</th><th>Action</th></tr></thead>
+            <tbody id="lesson-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="page-task" class="page" hidden>
+        <div class="task-columns">
+          <div class="panel">
+            <h2>To-Do</h2>
+            <div class="task-filter-banner" id="task-filter-banner" hidden><span></span><button type="button" id="task-filter-clear">Clear</button></div>
+            <form id="task-form" class="task-form">
+              <input type="text" id="task-input" placeholder="Add a task or event..." required aria-label="Task">
+              <input type="date" id="task-date-input" title="Event date" aria-label="Task date">
+              <button type="submit" class="primary-btn small">Add</button>
+            </form>
+            <ul id="task-list" class="task-list"></ul>
+          </div>
+          <div class="panel">
+            <h2 id="calendar-title">Calendar</h2>
+            <div class="calendar" id="calendar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-group" class="page" hidden>
+        <div class="panel">
+          <div class="section-head">
+            <h2>Friends</h2>
+          </div>
+          <form id="add-friend-form" class="task-form">
+            <input type="text" id="add-friend-input" placeholder="Add a friend by name..." required aria-label="Friend name">
+            <button type="submit" class="primary-btn small">Add friend</button>
+          </form>
+          <div class="people-grid" id="students-grid"></div>
+        </div>
+      </section>
+
+      <section id="page-others" class="page" hidden>
+        <div class="panel others-panel">
+
+          <div class="others-view" data-others-view="handbook" hidden>
+            <p class="others-lead">DLSU-D Student Handbook, effective SY 2023-2024: policies, uniform, ID rules, student discipline and the code of conduct.</p>
+            <div class="others-actions">
+              <a class="primary-btn small" href="pdf/student_handbook.pdf" target="_blank" rel="noopener"><span data-icon="file"></span> Open in new tab</a>
+              <a class="ghost-btn" href="pdf/student_handbook.pdf" download><span data-icon="download"></span> Download</a>
+            </div>
+            <iframe class="others-frame" title="DLSU-D Student Handbook" data-src="pdf/student_handbook.pdf#view=FitH"></iframe>
+          </div>
+
+          <div class="others-view" data-others-view="aklatan" hidden>
+            <img class="others-banner" src="assets/aklatan.png" alt="Aklatang Emilio Aguinaldo - Information Resource Center">
+            <p class="others-lead">The DLSU-D library and information resource center. Find books, references and study spaces, and follow the library for updates.</p>
+            <div class="others-info">
+              <div class="others-info-row"><span data-icon="mail"></span><a href="mailto:aklatan@dlsud.edu.ph">aklatan@dlsud.edu.ph</a></div>
+              <div class="others-info-row"><span data-icon="globe"></span><a href="https://www.dlsud.edu.ph/library.htm" target="_blank" rel="noopener">www.dlsud.edu.ph/library.htm</a></div>
+              <div class="others-info-row"><span data-icon="at"></span><span>@dlsudaklatan</span></div>
+            </div>
+            <div class="others-actions">
+              <a class="primary-btn small others-fb" href="https://www.facebook.com/dlsudlibrary" target="_blank" rel="noopener"><span data-icon="facebook"></span> Visit on Facebook</a>
+            </div>
+          </div>
+
+          <div class="others-view" data-others-view="cdlm" hidden>
+            <img class="others-banner" src="assets/cdlm.png" alt="CDLM - Center for Digital Learning Management">
+            <p class="others-lead">The Center for Digital Learning Management supports online learning and this LMS. Reach out for account, course or platform concerns.</p>
+            <div class="others-info">
+              <div class="others-info-row"><span data-icon="pin"></span><span>2nd floor Do&ntilde;a Marcela Mari&ntilde;o de Agoncillo (MAH)</span></div>
+              <div class="others-info-row"><span data-icon="phone"></span><span>(046) 481-1900 local 3280</span></div>
+              <div class="others-info-row"><span data-icon="mail"></span><a href="mailto:cdlm@dlsud.edu.ph">cdlm@dlsud.edu.ph</a></div>
+            </div>
+            <div class="others-actions">
+              <a class="primary-btn small others-yt" href="https://www.youtube.com/channel/UC6G9GPFzguzEmmf89S8B7hA" target="_blank" rel="noopener"><span data-icon="youtube"></span> Watch on YouTube</a>
+            </div>
+          </div>
+
+          <div class="others-view" data-others-view="calendar" hidden>
+            <div class="others-actions">
+              <a class="primary-btn small" href="pdf/institutional_calendar_2026_2027.pdf" target="_blank" rel="noopener"><span data-icon="calendar"></span> Open in new tab</a>
+              <a class="ghost-btn" href="pdf/institutional_calendar_2026_2027.pdf" download><span data-icon="download"></span> Download</a>
+            </div>
+            <iframe class="others-frame" title="2026-2027 Institutional Calendar" data-src="pdf/institutional_calendar_2026_2027.pdf#view=FitH"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-profile" class="page" hidden>
+
+        <div class="profile-hero">
+          <div class="profile-hero-bg"></div>
+          <span class="role-chip">Student</span>
+          <div class="profile-hero-main">
+            <div class="avatar-xl" id="profile-avatar-preview">JR</div>
+            <div class="profile-hero-text">
+              <h2 id="profile-hero-name">Jason Ranti</h2>
+              <p id="profile-hero-public">Your public profile is not activated</p>
+            </div>
+          </div>
+          <div class="profile-hero-foot">
+            <div>
+              <a class="org-link" href="#">De La Salle University - Dasmariñas</a>
+              <div class="org-sub">DLSU-D Schoolbook</div>
+            </div>
+            <button class="primary-btn pill" id="profile-hero-edit">Edit</button>
+          </div>
+        </div>
+
+        <div class="tabs profile-tabs" id="profile-tabs" role="tablist">
+          <button class="tab active" role="tab" data-profile-tab="about">About</button>
+          <button class="tab" role="tab" data-profile-tab="info">Info</button>
+          <button class="tab" role="tab" data-profile-tab="enrolled">Enrolled</button>
+          <button class="tab" role="tab" data-profile-tab="semester">Schedule</button>
+          <button class="tab" role="tab" data-profile-tab="portal">Portal</button>
+        </div>
+
+        <div class="profile-edit" id="profile-edit-form" hidden>
+          <div class="avatar-upload">
+            <label class="upload-btn">Change photo
+              <input type="file" id="avatar-input" accept="image/*" hidden>
+            </label>
+          </div>
+          <label>Display name<input type="text" id="profile-name-input" placeholder="Your name"></label>
+          <label>Student number<input type="text" id="profile-studentnum-input" placeholder="e.g. 202280268"></label>
+          <label>Section code<input type="text" id="profile-section-input" placeholder="e.g. BIT13"></label>
+          <label>Mobile number<input type="text" id="profile-mobile-input" placeholder="09XXXXXXXXX" maxlength="11"></label>
+          <label>Bio<textarea id="profile-bio-input" class="notepad" placeholder="Say a little about yourself..."></textarea></label>
+          <button id="profile-save" class="primary-btn small">Save changes</button>
+        </div>
+
+        <div class="profile-pane" id="profile-pane-about">
+          <div class="panel profile-hub" id="profile-hub">
+
+            <section class="hub-sec fixed open" data-hub="about">
+              <div class="hub-head static"><span class="hub-title">About</span></div>
+              <div class="hub-body"><div class="hub-inner">
+                <p id="profile-bio-text" class="muted-box">There is currently no information about this member.</p>
+              </div></div>
+            </section>
+
+            <section class="hub-sec fixed open" data-hub="perks">
+              <button type="button" class="hub-head" id="perks-open" aria-haspopup="dialog"><span class="hub-title">Perks</span><span class="hub-sum" id="hub-sum-perks"></span><span class="hub-view">View details <span class="hub-arrow" data-icon="chevronRight"></span></span></button>
+              <div class="hub-body"><div class="hub-inner">
+                <div class="level-card" id="perks-card" role="button" tabindex="0" aria-label="View perks details">
+                  <div class="level-ring" id="level-ring">
+                    <div class="level-ring-inner">
+                      <span class="level-num" id="level-num">1</span>
+                      <span class="level-label">Level</span>
+                    </div>
+                  </div>
+                  <div class="level-info">
+                    <div class="level-rank" id="level-rank">Padawan</div>
+                    <div class="level-xp" id="level-xp">0 / 0 XP</div>
+                    <div class="level-next" id="level-next">0 XP to the next level</div>
+                  </div>
+                </div>
+              </div></div>
+            </section>
+
+            <section class="hub-sec open" data-hub="awards">
+              <button type="button" class="hub-head" aria-expanded="true"><span class="hub-title">Awards <span class="count-pill" id="awards-count">0</span></span><span class="hub-sum" id="hub-sum-awards"></span><span class="hub-chev" data-icon="chevronDown"></span></button>
+              <div class="hub-body"><div class="hub-inner">
+                <div class="awards-grid" id="awards-grid"></div>
+              </div></div>
+            </section>
+
+            <section class="hub-sec open" data-hub="friends">
+              <button type="button" class="hub-head" aria-expanded="true"><span class="hub-title">Friends <span class="count-pill" id="friends-count">0</span></span><span class="hub-sum" id="hub-sum-friends"></span><span class="hub-chev" data-icon="chevronDown"></span></button>
+              <div class="hub-body"><div class="hub-inner">
+                <div id="profile-friends-list"></div>
+                <button type="button" class="chevron-btn hub-more" id="friends-toggle" aria-label="Expand friends" aria-expanded="false"><span data-icon="chevronDown"></span></button>
+              </div></div>
+            </section>
+          </div>
+        </div>
+
+        <div class="profile-pane" id="profile-pane-info" hidden></div>
+
+        <div class="profile-pane" id="profile-pane-enrolled" hidden>
+          <div class="cards-row wrap" id="profile-enrolled-grid"></div>
+        </div>
+
+        <div class="profile-pane" id="profile-pane-semester" hidden></div>
+
+        <div class="profile-pane" id="profile-pane-portal" hidden></div>
+
+        <div hidden>
+          <span id="profile-student-number"></span><span id="profile-section"></span>
+          <button id="profile-dark-toggle"><span id="profile-theme-ico"></span></button>
+        </div>
+      </section>
+    </div>
+
+    <button type="button" class="right-collapse-btn" id="right-collapse-btn" aria-label="Hide side panel" aria-expanded="true">
+      <span data-icon="chevronRight"></span>
+    </button>
+    <aside class="right">
+      <div class="clock-card" id="clock-card">
+        <div class="clock-time" id="clock-time">00:00:00</div>
+        <div class="clock-date" id="clock-date">-</div>
+      </div>
+
+      <div class="profile-card">
+        <div class="profile-card-top">
+          <span class="rank-chip"><span id="card-rank-title">Padawan</span></span>
+        </div>
+
+        <div class="xp-avatar" id="xp-avatar">
+          <div class="avatar-lg" id="right-avatar">JR</div>
+          <span class="level-badge" id="card-level-badge" title="Level">1</span>
+        </div>
+
+        <div class="profile-card-name" id="right-name">Jason Ranti</div>
+        <div class="profile-card-handle" id="right-handle">@jasonranti</div>
+
+        <div class="xp-bar" aria-label="XP progress">
+          <div class="xp-bar-track"><div class="xp-bar-fill" id="xp-bar-fill"></div></div>
+          <div class="xp-bar-meta"><span id="xp-current">0 XP</span><span id="xp-next">Level 2</span></div>
+        </div>
+
+        <div class="profile-stats">
+          <div class="stat-pill"><span data-icon="trophy"></span><div class="stat-num" id="stat-rank">#10</div><div class="stat-label">Rank</div></div>
+          <div class="stat-pill" hidden><span data-icon="flame"></span><div class="stat-num" id="stat-streak">0</div><div class="stat-label">Day streak</div></div>
+          <div class="stat-pill" hidden><span data-icon="award"></span><div class="stat-num" id="stat-badges">0</div><div class="stat-label">Badges</div></div>
+        </div>
+      </div>
+
+      <div class="week-strip-head">
+        <button id="week-prev" aria-label="Previous week"><span data-icon="chevronLeft"></span></button>
+        <span id="week-month-label">October 2022</span>
+        <button id="week-next" aria-label="Next week"><span data-icon="chevronRight"></span></button>
+      </div>
+      <div class="week-strip" id="week-strip"></div>
+
+      <div class="row-head"><h2 id="agenda-title">Today's Agenda</h2></div>
+      <div id="upcoming-class-list"></div>
+
+      <div class="row-head">
+        <h2>Assessments Due</h2>
+        <span class="count-pill" id="assessment-count">0</span>
+        <button type="button" class="chevron-btn sm" id="assessments-toggle" aria-label="Hide assessments due" aria-expanded="true"><span data-icon="chevronDown"></span></button>
+      </div>
+      <ul id="assessment-list" class="task-list sidebar-task-list"></ul>
+
+      <div id="right-todo-wrap" hidden>
+        <div class="row-head"><h2>To-Do</h2></div>
+        <ul id="sidebar-task-list" class="task-list sidebar-task-list"></ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="drawer-backdrop" id="drawer-backdrop" hidden>
+  <div class="drawer" id="lesson-drawer">
+    <button class="drawer-close" id="drawer-close" data-icon="x" aria-label="Close"></button>
+    <div id="subject-detail"></div>
+    <div hidden>
+      <div id="drawer-video"></div><span id="drawer-category"></span><h2 id="drawer-title"></h2>
+      <div id="drawer-mentor-avatar"></div><span id="drawer-mentor-name"></span><p id="drawer-transcript"></p>
+      <textarea id="drawer-note"></textarea><button id="drawer-complete"></button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="mentor-modal-backdrop" hidden>
+  <div class="modal">
+    <button class="drawer-close" id="mentor-modal-close" data-icon="x" aria-label="Close"></button>
+    <h2>Professor Directory</h2>
+    <input type="text" id="mentor-search" placeholder="Search professors..." class="modal-search" aria-label="Search professors">
+    <div class="people-grid" id="mentor-modal-grid"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="post-modal-backdrop" hidden>
+  <form class="modal composer" id="post-form">
+    <button type="button" class="drawer-close" id="post-modal-close" data-icon="x" aria-label="Close"></button>
+    <h2>New post</h2>
+
+    <div class="kind-picker" id="post-kind" role="group" aria-label="Post type">
+      <button type="button" class="kind-option active" data-kind="announcement"><span data-icon="megaphone"></span> Announcement</button>
+      <button type="button" class="kind-option" data-kind="event"><span data-icon="calendar"></span> Event</button>
+      <button type="button" class="kind-option" data-kind="reminder"><span data-icon="clock"></span> Reminder</button>
+    </div>
+
+    <label>Title
+      <input type="text" id="post-title" placeholder="What is this post about?" maxlength="120" required>
+    </label>
+    <label>Message
+      <textarea id="post-body" class="notepad" placeholder="Write the details everyone should know..." required></textarea>
+    </label>
+
+    <div class="attach-row">
+      <label class="upload-btn"><span data-icon="image"></span> Add image
+        <input type="file" id="post-image" accept="image/*" hidden>
+      </label>
+      <label class="upload-btn"><span data-icon="paperclip"></span> Attach file
+        <input type="file" id="post-file" hidden>
+      </label>
+    </div>
+    <div class="attach-preview" id="post-attach-preview" hidden></div>
+
+    <div class="modal-actions">
+      <button type="button" class="ghost-btn" id="post-cancel">Cancel</button>
+      <button type="submit" class="primary-btn">Post</button>
+    </div>
+  </form>
+</div>
+
+<div id="toast-container" aria-live="polite"></div>
+
+<script src="js/core.js"></script>
+<script src="js/schedule-subjects-profile.js"></script>
+<script src="js/tasks-calendar-topbar.js"></script>
+<script src="js/module-reader.js"></script>
+<script src="js/module-intro-assessments.js"></script>
+<script src="js/course-sort.js"></script>
+<script src="js/profile-perks.js"></script>
+<script src="js/others-menu.js"></script>
+<script src="js/news-engagement.js"></script>
+<script src="js/mobile-nav.js"></script>
+</body>
+</html>
